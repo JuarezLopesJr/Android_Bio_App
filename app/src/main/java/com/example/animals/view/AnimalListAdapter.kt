@@ -3,6 +3,7 @@ package com.example.animals.view
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animals.R
 import com.example.animals.model.AnimalModel
@@ -35,6 +36,13 @@ class AnimalListAdapter(private val animalList: ArrayList<AnimalModel>) :
         // using the loadImage extension function to load images in the screen
         holder.view.animalImage
             .loadImage(animalList[position].imageUrl, getProgressDrawable(holder.view.context))
+
+        holder.view.animalLayout.setOnClickListener {
+            val action = ListFragmentDirections
+                .actionGoToDetail(animalList[position])
+
+            Navigation.findNavController(holder.view).navigate(action)
+        }
     }
 
 
