@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
-<LinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".view.DetailFragment"
-        android:id="@+id/animalFragDetailLayout"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+    <data>
 
-    <ImageView
-            android:id="@+id/animalImage"
+        <variable
+                name="animal"
+                type="com.example.animals.model.AnimalModel"/>
+        
+        <variable
+                name="palette"
+                type="com.example.animals.model.AnimalPalette"/>
+    </data>
+
+    <LinearLayout
+
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="center"
-            android:minHeight="200dp"/>
+            android:layout_height="match_parent"
+            tools:context=".view.DetailFragment"
+            android:id="@+id/animalFragDetailLayout"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:background="@{palette.color}">
 
-    <TextView
-            android:id="@+id/animalName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Title"
-            android:layout_margin="4dp"
-            android:text="Animal name"/>
+        <ImageView
+                android:imageUrl="@{animal.imageUrl}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:minHeight="200dp"/>
 
-    <TextView
-            android:id="@+id/animalLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Text"
-            android:layout_margin="4dp"
-            android:text="Animal Location"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Title"
+                android:layout_margin="4dp"
+                android:text="@{animal.name}"/>
 
-    <TextView
-            android:id="@+id/animalLifeSpan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Text"
-            android:layout_margin="4dp"
-            android:text="Animal lifespan"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Text"
+                android:layout_margin="4dp"
+                android:text="@{animal.location}"/>
 
-    <TextView
-            android:id="@+id/animalDiet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="@style/Text"
-            android:layout_margin="4dp"
-            android:text="Animal Diet"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Text"
+                android:layout_margin="4dp"
+                android:text="@{animal.lifeSpan}"/>
 
-</LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Text"
+                android:layout_margin="4dp"
+                android:text="@{animal.diet}"/>
 
+    </LinearLayout>
 
+</layout>
         <!-- <com.google.android.material.floatingactionbutton.FloatingActionButton
                      android:src="@drawable/ic_list"
                      android:layout_width="wrap_content"

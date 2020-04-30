@@ -16,7 +16,7 @@ data class ApiKey(
 
 data class AnimalModel(
     val name: String?,
-    val location:String?,
+    val location: String?,
     val taxonomy: Taxonomy?,
     val speed: Speed?,
     val diet: String?,
@@ -122,3 +122,8 @@ data class Speed(
         }
     }
 }
+
+/*this var color, will be referenced in LinearLayout (fragment_detail) as value to the background
+    this is to use with data binding lib, the reference was created in <variable name="palette" />
+*/
+data class AnimalPalette(var color: Int)
