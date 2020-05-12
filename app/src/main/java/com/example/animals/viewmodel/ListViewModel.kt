@@ -3,6 +3,9 @@ package com.example.animals.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.example.animals.depinjection.AppModule
+import com.example.animals.depinjection.CONTEXT_APP
+import com.example.animals.depinjection.TypeOfContext
 import com.example.animals.model.AnimalApiService
 import com.example.animals.model.AnimalModel
 import com.example.animals.model.ApiKey
@@ -11,6 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /*using AndroidViewModel instead of ViewModel, to be able to get the application context,
     not the activity context, the application context is not part of view and it's has a lifetime
@@ -31,9 +35,22 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     private val disposable = CompositeDisposable()
-    private val apiService = AnimalApiService()
-    private val prefs = SharedPreferencesHelper(getApplication())
+
+    @Inject
+    lateinit var apiService: AnimalApiService
+
+    @Inject
+    @field:TypeOfContext(CONTEXT_APP)
+    lateinit var prefs: SharedPreferencesHelper
+
     private var invalidApiKey = false
+
+    init {
+        DaggerViewModelComponent.builder()
+            .appModule(AppModule(getApplication()))
+            .build()
+            .inject(this)
+    }
 
     override fun onCleared() {
         super.onCleared()
