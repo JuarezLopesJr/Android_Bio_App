@@ -21,6 +21,12 @@ import javax.inject.Inject
     which is the app lifetime. It's the default for MVVM pattern
 */
 class ListViewModel(application: Application) : AndroidViewModel(application) {
+
+    /* setting up config to be able to test this component*/
+    constructor(application: Application, test: Boolean = true) : this(application) {
+        injected = true
+    }
+
     /* lazy means that this data will only be instantiated when it's needed */
     val animals by lazy {
         MutableLiveData<List<AnimalModel>>()
@@ -44,13 +50,18 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     lateinit var prefs: SharedPreferencesHelper
 
     private var invalidApiKey = false
+    private var injected = false
 
-    init {
-        DaggerViewModelComponent.builder()
-            .appModule(AppModule(getApplication()))
-            .build()
-            .inject(this)
+    /* verification to see if i'm in a test mode or running in production */
+    fun inject() {
+        if (!injected) {
+            DaggerViewModelComponent.builder()
+                .appModule(AppModule(getApplication()))
+                .build()
+                .inject(this)
+        }
     }
+
 
     override fun onCleared() {
         super.onCleared()
@@ -58,6 +69,7 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refresh() {
+        inject()
         invalidApiKey = false
         val key = prefs.getApiKey()
         loading.value = true
@@ -70,6 +82,7 @@ class ListViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun hardRefresh() {
+        inject()
         loading.value = true
         getKey()
     }
